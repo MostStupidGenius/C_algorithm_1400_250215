@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
-#include "basic.h"
+
+void showList(int arr[], int size);
 
 // 버블 정렬
 // 0번째 요소부터 마지막 요소까지 순회하면서 
@@ -82,7 +83,44 @@ void selectionSort(int arr[], int size) {
 	}
 }
 
+// 삽입 정렬
+// 정렬된 왼쪽과 정렬이 안 된 오른쪽으로 크게 나누어서
+// 정렬이 안 된 값 중 하나를 정렬된 값 각각과 비교하여
+// 적절한 위치에 삽입한다(버블과 비슷)
+void insertionSort(int arr[], int size) {
+	// 배열 arr의 길이 size를 활용해
+	// 전체 배열을 순회한다.
+	// 이때, 삽입정렬에서 0번째 요소는 이미 정렬된 것으로 간주한다.
+	for (int i = 1; i < size; i++) {
+		// 정렬된 부분의 적절한 위치에 삽입하려는 대상 값
+		int key = arr[i];
+		showList(arr, size);
+		int j = i - 1;
 
+		// j를 감소시키면서(정렬된 부분에서 왼쪽으로 이동하며)
+		// key에 들어가 있는 값을 검사한다.
+		while (j >= 0
+			&& arr[j] > key // 만약 j번째 요소의 값이 key보다 크다면
+			) {
+			// j번째 요소의 값을 j+1번째 요소의 값으로 덮어씌운다.
+			// 값을 우측으로 한 칸 이동
+			arr[j + 1] = arr[j];
+			// 이후 반복 조건에 따라 오른쪽으로 옮겨 붙여넣는 동작을
+			// 반복한다.
+			j -= 1; // j의 값을 1 감소시켜 왼쪽으로 시선을 옮긴다.
+		}
+		// while문을 탈출했다면, j번째 요소보다 값이 크다는 결론이 난다.
+		// 혹은 더이상 더 작은 값이 없을 때(j가 음수) while문을 탈출한다.
+		arr[j + 1] = key;
+	}
+}
+
+void showList(int arr[], int size ) {
+	for (int i = 0; i < size; i++) {
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+}
 
 int main() {
 	int arr[] = { 88, 33, 21, 19, 12, 71, 15 };
@@ -94,9 +132,15 @@ int main() {
 	//bubbleSort(arr, size);
 
 	// 선택 정렬 시행
-	selectionSort(arr, size);
+	//selectionSort(arr, size);
 
 	// 삽입 정렬 시행
+	insertionSort(arr, size);
+
+	// 값 확인
+	//for (int  i = 0; i < size; i++){
+	//	printf("%d ", arr[i]);
+	//}
 
 	return 0;
 }
